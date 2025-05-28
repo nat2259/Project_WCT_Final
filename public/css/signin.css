@@ -1,0 +1,96 @@
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: rgb(242, 242, 242);
+            margin: 0;
+        }
+
+        form {
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            color: #333;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+        }
+
+        form h2 {
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            color: #333;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 14px 20px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            font-size: 1em;
+            color: #333;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .input-group svg {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        button {
+            width: 30%;
+            padding: 15px;
+            margin-left: 370px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 15px;
+            background-color: #4ee24e;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #93e293;
+        }
+
+        .signup-link {
+            display: inline-block;
+            margin-top: 20px;
+            margin-bottom: 5px;
+            font-size: 1em;
+            color: #20a84d;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .signup-link:hover {
+            color: #93e293;
+        }
