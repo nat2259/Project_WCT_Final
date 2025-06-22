@@ -12,23 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('billing_details', function (Blueprint $table) {
-          
-            $table->id();
-            $table->foreignId('user_id')
-                ->constrained('users')
-                ->onDelete('cascade');
-                
+                $table->id();
+                $table->unsignedBigInteger('user_id')->nullable();
+                $table->string('first_name');
+                $table->string('last_name');
+                $table->string('country');
+                $table->string('street_address');
+                $table->string('apartment')->nullable();
+                $table->string('city');
+                $table->string('postcode')->nullable();
+                $table->string('phone');
+                $table->string('email');
+                $table->timestamps();
 
-            $table->string('country');
-            $table->string('street_address');
-            $table->string('apartment');
-            $table->string('city');
-            $table->string('postcode');
-            $table->string('phone');
-            $table->string('email');
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            });
 
-            $table->timestamps();
-        });
     }
 
     /**

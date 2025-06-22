@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Cart;
 
 class OrderController extends Controller
 {
@@ -86,4 +88,6 @@ class OrderController extends Controller
             return response()->json(["error" => $th->getMessage()], 500);
         }
     }
+
+
 }

@@ -12,7 +12,11 @@ class ProductDetailController extends Controller
      */
     public function index()
     {
-        return ProductDetail::all();
+         $products = ProductDetail::all();
+         
+
+        return view('product.index', compact('products'));
+
     }
 
     public function store(Request $request)

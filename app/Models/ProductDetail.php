@@ -33,4 +33,11 @@ class ProductDetail extends Model
     {
         return $this->hasMany(Wishlist::class);
     }
+    protected $appends = ['image_url'];
+
+public function getImageUrlAttribute()
+{
+    return asset('storage/images/'.$this->image);
+}
+    
 }

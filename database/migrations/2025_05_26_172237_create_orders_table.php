@@ -12,21 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')
-                ->constrained('users')
-                ->onDelete('cascade');
-           
-            $table->foreignId('billing_detail_id')  
-                ->constrained('billing_details')
-                ->onDelete('cascade'); // billing_detail_id foreign key
+              $table->id();
+                $table->unsignedBigInteger('user_id')->nullable();
+                $table->unsignedBigInteger('billing_detail_id');
+                $table->decimal('total_amount', 10, 2)->default(0);
+                $table->string('status')->default('pending');
+                $table->string('payment_method')->default('paypal');
+                $table->timestamps();
 
-                
-            $table->string('payment_method'); // payment_method varchar
-
-            
-            $table->timestamps();
-        });
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('billing_detail_id')->references('id')->on('billing_details')->onDelete('cascade');
+            });
     }
 
     /**

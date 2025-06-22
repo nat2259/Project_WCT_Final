@@ -52,22 +52,22 @@
 		    </div>
 		  </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="index.html">Vegefoods</a>
+	      <a class="navbar-brand" href="{{ url('/dashboard') }}">Vegefoods</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
 
-      <div class="collapse navbar-collapse" id="ftco-nav">
+	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="{{ url('/home') }}" class="nav-link">Home</a></li>
+	          <li class="nav-item active"><a href="{{ url('/dashboard') }}" class="nav-link">Home</a></li>
 	          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
               	<a class="dropdown-item" href="{{ url('/shop') }}">Shop</a>
               	<a class="dropdown-item" href="{{ url('/wishlist') }}">Wishlist</a>
-                <a class="dropdown-item" href="{{ url('/product_single') }}">Single Product</a>
+                {{-- <a class="dropdown-item" href="{{ url('/product_single') }}">Single Product</a> --}}
                 <a class="dropdown-item" href="{{ url('/cart') }}">Cart</a>
                 <a class="dropdown-item" href="{{ url('/checkout') }}" >Checkout</a>
               </div>
@@ -76,9 +76,22 @@
 	          <li class="nav-item"><a href="{{ url('/blog') }}" class="nav-link">Blog</a></li>
 	          <li class="nav-item"><a href="{{ url('/contact') }}"class="nav-link">Contact</a></li>
 	          <li class="nav-item cta cta-colored"><a href="{{ url('/cart') }}"class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-				<li class="nav-item-si" style="margin-top: 20px; margin-left: 10px;">
-    				<a href="{{ url('/register') }}"><span class="fas fa-user"></span></a>
-				</li>
+
+            <div class="user-actions ml-8 mt-[10px]">
+                <!-- Profile Button -->
+                <a href="{{ route('profile.edit') }}" class="btn btn-sm t mr-2">
+                    <i class="fas fa-user-circle mr-1"></i> {{ __('Profile') }}
+                </a>
+                
+                <!-- Logout Button -->
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-sm " 
+                            onclick="return confirm('Are you sure you want to log out?')">
+                        <i class="fas fa-sign-out-alt mr-1"></i> {{ __('Log Out') }}
+                    </button>
+                </form>
+            </div>
 	        </ul>
 	      </div>
 	    </div>
@@ -96,130 +109,158 @@
       </div>
     </div>
 
-    <section class="ftco-section ftco-cart">
-			<div class="container">
-				<div class="row">
-    			<div class="col-md-12 ftco-animate">
-    				<div class="cart-list">
-	    				<table class="table">
-						    <thead class="thead-primary">
-						      <tr class="text-center">
-						        <th>&nbsp;</th>
-						        <th>&nbsp;</th>
-						        <th>Product name</th>
-						        <th>Price</th>
-						        <th>Quantity</th>
-						        <th>Total</th>
-						      </tr>
-						    </thead>
-						    <tbody>
-						      <tr class="text-center">
-						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-						        
-						        <td class="image-prod"><div class="img" style="background-image:url(images/product-3.jpg);"></div></td>
-						        
-						        <td class="product-name">
-						        	<h3>Bell Pepper</h3>
-						        	<p>Far far away, behind the word mountains, far from the countries</p>
-						        </td>
-						        
-						        <td class="price">$4.90</td>
-						        
-						        <td class="quantity">
-						        	<div class="input-group mb-3">
-					             	<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-					          	</div>
-					          </td>
-						        
-						        <td class="total">$4.90</td>
-						      </tr><!-- END TR-->
+  <section class="ftco-section ftco-cart"> 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ftco-animate">
+                <div class="cart-list">
+                    <table class="table">
+                        <thead class="thead-primary">
+                            <tr class="text-center">
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                                <th>Product name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $subtotal = 0;
+                                $discount = 0;
+                                foreach ($cartItems as $item) {
+                                    $price = $item->productDetail->cost;
+                                    $quantity = $item->quantity;
+                                    $itemSubtotal = $price * $quantity;
+                                    $subtotal += $itemSubtotal;
 
-						      <tr class="text-center">
-						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-						        
-						        <td class="image-prod"><div class="img" style="background-image:url(images/product-4.jpg);"></div></td>
-						        
-						        <td class="product-name">
-						        	<h3>Bell Pepper</h3>
-						        	<p>Far far away, behind the word mountains, far from the countries</p>
-						        </td>
-						        
-						        <td class="price">$15.70</td>
-						        
-						        <td class="quantity">
-						        	<div class="input-group mb-3">
-					             	<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-					          	</div>
-					          </td>
-						        
-						        <td class="total">$15.70</td>
-						      </tr><!-- END TR-->
-						    </tbody>
-						  </table>
-					  </div>
-    			</div>
-    		</div>
-    		<div class="row justify-content-end">
-    			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-    				<div class="cart-total mb-3">
-    					<h3>Coupon Code</h3>
-    					<p>Enter your coupon code if you have one</p>
-  						<form action="#" class="info">
-	              <div class="form-group">
-	              	<label for="">Coupon code</label>
-	                <input type="text" class="form-control text-left px-3" placeholder="">
-	              </div>
-	            </form>
-    				</div>
-    				<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Apply Coupon</a></p>
-    			</div>
-    			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-    				<div class="cart-total mb-3">
-    					<h3>Estimate shipping and tax</h3>
-    					<p>Enter your destination to get a shipping estimate</p>
-  						<form action="#" class="info">
-	              <div class="form-group">
-	              	<label for="">Country</label>
-	                <input type="text" class="form-control text-left px-3" placeholder="">
-	              </div>
-	              <div class="form-group">
-	              	<label for="country">State/Province</label>
-	                <input type="text" class="form-control text-left px-3" placeholder="">
-	              </div>
-	              <div class="form-group">
-	              	<label for="country">Zip/Postal Code</label>
-	                <input type="text" class="form-control text-left px-3" placeholder="">
-	              </div>
-	            </form>
-    				</div>
-    				<p><a href="{{ url('/checkout') }}" class="btn btn-primary py-3 px-4">Estimate</a></p>
-    			</div>
-    			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-    				<div class="cart-total mb-3">
-    					<h3>Cart Totals</h3>
-    					<p class="d-flex">
-    						<span>Subtotal</span>
-    						<span>$20.60</span>
-    					</p>
-    					<p class="d-flex">
-    						<span>Delivery</span>
-    						<span>$0.00</span>
-    					</p>
-    					<p class="d-flex">
-    						<span>Discount</span>
-    						<span>$3.00</span>
-    					</p>
-    					<hr>
-    					<p class="d-flex total-price">
-    						<span>Total</span>
-    						<span>$17.60</span>
-    					</p>
-    				</div>
-    				<p><a href="{{ url('/checkout') }}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
-    			</div>
-    		</div>
-			</div>
-		</section>
+                                    // If your product has a discount in %, calculate discount amount
+                                    if (!empty($item->productDetail->discount) && $item->productDetail->discount > 0) {
+                                        $discount += ($price * $item->productDetail->discount / 100) * $quantity;
+                                    }
+                                }
+                                $delivery = 0; // Change this if you want to add shipping fee dynamically
+                                $total = $subtotal - $discount + $delivery;
+                            @endphp
+
+                            @forelse ($cartItems as $item)
+                                <tr class="text-center">
+                                    <td class="product-remove">
+                                        <form action="{{ route('cart.remove', $item->id) }}" method="POST" onsubmit="return confirm('Remove this item?')" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" style="border:none; background:none; padding: 15px;">
+                                                <span class="ion-ios-close"></span>
+                                            </button>
+                                        </form>
+                                    </td>
+
+                                    <td class="image-prod">
+                                        <div class="img" style="background-image:url({{ asset($item->productDetail->image ?? 'images/default.jpg') }});"></div>
+                                    </td>
+
+                                    <td class="product-name">
+                                        <h3>{{ $item->productDetail->product_name }}</h3>
+                                        <p>{{ $item->productDetail->description ?? 'No description available' }}</p>
+                                    </td>
+
+                                    <td class="price">${{ number_format($item->productDetail->cost, 2) }}</td>
+
+                                    <td class="quantity">
+                    <form action="{{ route('cart.update', $item->id) }}" method="POST" style="display:inline; ">
+										@csrf
+										@method('PATCH')
+										<button type="submit" name="quantity"   value="{{ max(0, $item->quantity - 1) }} ">-</button>
+									</form>
+
+									<span>{{ $item->quantity }}</span>
+
+									<form action="{{ route('cart.update', $item->id) }}" method="POST" style="display:inline;">
+										@csrf
+										@method('PATCH')
+										<button type="submit"  name="quantity"   value="{{ $item->quantity + 1 }}">+</button>
+									</form>
+
+                                    </td>
+
+                                    <td class="total">${{ number_format($item->quantity * $item->productDetail->cost, 2) }}</td>
+                                </tr>
+                            @empty
+                                <tr><td colspan="6" class="text-center">Your cart is empty</td></tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-end">
+            <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+                <div class="cart-total mb-3">
+                    <h3>Coupon Code</h3>
+                    <p>Enter your coupon code if you have one</p>
+                    <form action="{{ route('cart.applyCoupon') }}" method="POST" class="info">
+					@csrf
+					<div class="form-group">
+						<label for="">Coupon code</label>
+						<input type="text" name="coupon_code" class="form-control text-left px-3" placeholder="Enter coupon code" required>
+					</div>
+					   </div>
+               		 <p><a href="{{url('/checkout')}}" class="btn btn-primary py-3 px-4">Apply Coupon</a></p>
+           				 </div>
+				</form>
+
+             
+
+            <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+                <div class="cart-total mb-3">
+                    <h3>Estimate shipping and tax</h3>
+                    <p>Enter your destination to get a shipping estimate</p>
+                    <form action="#" class="info">
+                        <div class="form-group">
+                            <label for="">Country</label>
+                            <input type="text" class="form-control text-left px-3" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="country">State/Province</label>
+                            <input type="text" class="form-control text-left px-3" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Zip/Postal Code</label>
+                            <input type="text" class="form-control text-left px-3" placeholder="">
+                        </div>
+                    </form>
+                </div>
+                <p><a href="{{ url('/checkout') }}" class="btn btn-primary py-3 px-4">Estimate</a></p>
+            </div>
+
+            <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+                <div class="cart-total mb-3">
+                    <h3>Cart Totals</h3>
+                    <p class="d-flex">
+                        <span>Subtotal</span>
+                        <span>${{ number_format($subtotal, 2) }}</span>
+                    </p>
+                    <p class="d-flex">
+                        <span>Delivery</span>
+                        <span>${{ number_format($delivery, 2) }}</span>
+                    </p>
+                    <p class="d-flex">
+                        <span>Discount</span>
+                        <span>${{ number_format($discount, 2) }}</span>
+                    </p>
+                    <hr>
+                    <p class="d-flex total-price">
+                        <span>Total</span>
+                        <span>${{ number_format($total, 2) }}</span>
+                    </p>
+                </div>
+                <p><a href="{{ url('/checkout') }}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+            </div>
+        </div>
+    </div>
+</section>
 
 		<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
       <div class="container py-4">

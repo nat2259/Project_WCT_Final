@@ -1,0 +1,39 @@
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-success {
+    border-radius: 25px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-success:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-outline-secondary:hover {
+    color: #dc3545 !important;
+    border-color: #dc3545;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .icon-btn {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .btn-success span {
+        font-size: 0.9rem;
+    }
+    
+    .btn-success i {
+        display: none !important;
+    }
+}

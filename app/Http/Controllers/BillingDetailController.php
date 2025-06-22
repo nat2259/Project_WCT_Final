@@ -24,7 +24,9 @@ class BillingDetailController extends Controller
         try {
             $request->validate([
                 "user_id" => "required|integer",
-              
+                "first_name" => "required|string",
+                "last_name" => "required|string",
+            
                 "country" => "required|string",
                 "street_address" => "required|string",
                 "apartment" => "required|string",
@@ -70,6 +72,8 @@ class BillingDetailController extends Controller
         try {
             $request->validate([
                 "user_id" => "required|integer",
+                "first_name" => "required|string",
+                "last_name" => "required|string",
             
                 "country" => "required|string",
                 "street_address" => "required|string",

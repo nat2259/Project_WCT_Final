@@ -54,20 +54,20 @@
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="{{ url('/home') }}">Vegefoods</a>
+	      <a class="navbar-brand" href="{{ url('/dashboard') }}">Vegefoods</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
 
-      <div class="collapse navbar-collapse" id="ftco-nav">
+	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="{{ url('/home') }}" class="nav-link">Home</a></li>
+	          <li class="nav-item active"><a href="{{ url('/dashboard') }}" class="nav-link">Home</a></li>
 	          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
               	<a class="dropdown-item" href="{{ url('/shop') }}">Shop</a>
               	<a class="dropdown-item" href="{{ url('/wishlist') }}">Wishlist</a>
-                <a class="dropdown-item" href="{{ url('/product_single') }}">Single Product</a>
+                {{-- <a class="dropdown-item" href="{{ url('/product_single') }}">Single Product</a> --}}
                 <a class="dropdown-item" href="{{ url('/cart') }}">Cart</a>
                 <a class="dropdown-item" href="{{ url('/checkout') }}" >Checkout</a>
               </div>
@@ -76,9 +76,22 @@
 	          <li class="nav-item"><a href="{{ url('/blog') }}" class="nav-link">Blog</a></li>
 	          <li class="nav-item"><a href="{{ url('/contact') }}"class="nav-link">Contact</a></li>
 	          <li class="nav-item cta cta-colored"><a href="{{ url('/cart') }}"class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-				<li class="nav-item-si" style="margin-top: 20px; margin-left: 10px;">
-    				<a href="{{ url('/register') }}"><span class="fas fa-user"></span></a>
-				</li>
+
+            <div class="user-actions ml-8 mt-[10px]">
+                <!-- Profile Button -->
+                <a href="{{ route('profile.edit') }}" class="btn btn-sm t mr-2">
+                    <i class="fas fa-user-circle mr-1"></i> {{ __('Profile') }}
+                </a>
+                
+                <!-- Logout Button -->
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-sm " 
+                            onclick="return confirm('Are you sure you want to log out?')">
+                        <i class="fas fa-sign-out-alt mr-1"></i> {{ __('Log Out') }}
+                    </button>
+                </form>
+            </div>
 	        </ul>
 	      </div>
 	    </div>
@@ -113,7 +126,7 @@
 		                </div>
 		                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
 		                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-		                <p><a href="{{ url('/blog') }}" class="btn btn-primary py-2 px-3">Read more</a></p>
+		                {{-- <p><a href="{{ url('/blog') }}" class="btn btn-primary py-2 px-3">Read more</a></p> --}}
 		              </div>
 		            </div>
 		          </div>
@@ -129,7 +142,7 @@
 		                </div>
 		                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
 		                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-		                <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
+		                {{-- <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p> --}}
 		              </div>
 		            </div>
 		          </div>
@@ -145,7 +158,7 @@
 		                </div>
 		                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
 		                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-		                <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
+		                {{-- <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p> --}}
 		              </div>
 		            </div>
 		          </div>
@@ -161,7 +174,7 @@
 		                </div>
 		                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
 		                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-		                <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
+		                {{-- <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p> --}}
 		              </div>
 		            </div>
 		          </div>
@@ -177,7 +190,7 @@
 		                </div>
 		                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
 		                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-		                <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
+		                {{-- <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p> --}}
 		              </div>
 		            </div>
 		          </div>
@@ -193,7 +206,7 @@
 		                </div>
 		                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
 		                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-		                <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
+		                {{-- <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p> --}}
 		              </div>
 		            </div>
 		          </div>

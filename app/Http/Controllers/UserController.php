@@ -28,7 +28,9 @@ class UserController extends Controller
                 "password" => "required|string"
             ]);
             $user = new User();
-            $user->name = $request->first_name . ' ' . $request->last_name; // Assuming name is a combination of first and last name
+            $user->name = $request->first_name ;
+            $user->name = $request->last_name ;
+             // Assuming name is a combination of first and last name
             
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
@@ -60,7 +62,8 @@ class UserController extends Controller
                 "password" => "required|string"
             ]);
             $user = User::findOrFail($id);
-            $user->name = $request->first_name . ' ' . $request->last_name; // Assuming name is a combination of first and last name
+             $user->name = $request->first_name ;
+            $user->name = $request->last_name ; // Assuming name is a combination of first and last name
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
             $user->save();
@@ -121,7 +124,8 @@ class UserController extends Controller
                 "password" => "required|string|min:8"
             ]);
             $user = new User();
-           $user->name = $request->first_name . ' ' . $request->last_name;
+            $user->name = $request->first_name ;
+            $user->name = $request->last_name ;
 
             $user->email = $request->email;
             $user->password = bcrypt($request->password);

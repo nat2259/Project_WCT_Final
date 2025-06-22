@@ -3,77 +3,69 @@
 namespace App\Http\Controllers;
 
 use App\Models\Wishlist;
+use App\Models\ProductDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class WishlistController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the user's wishlist
      */
     public function index()
     {
-        return Wishlist::all();
-    }
+        $wishlistItems = Wishlist::with('productDetail')
+            ->where('user_id', Auth::id())
+            ->get();
 
+        return view('wishlist', compact('wishlistItems'));
+    }
+   
     public function store(Request $request)
     {
-        try {
-            $request->validate([
-                "user_id" => "required|integer",
-                "product_detail_id" => "required|integer",
-           
-            ]);
+        $request->validate([
+            'product_id' => 'required|exists:product_details,id'
+        ]);
 
-            $wishlist = new Wishlist();
-            $wishlist->user_id = $request->user_id;
-            $wishlist->product_detail_id = $request->product_detail_id;
+        // Check if already in wishlist
+        $exists = Wishlist::where('user_id', Auth::id())
+                         ->where('product_detail_id', $request->product_id)
+                         ->exists();
+
+        if ($exists) {
+           return redirect('wishlist')->with('info', 'This product is already in your wishlist!');
+        }
+
+        // Add to wishlist
+        Wishlist::create([
+            'user_id' => Auth::id(),
+            'product_detail_id' => $request->product_id
+        ]);
+
+        return redirect('wishlist')->with('info', 'This product is already in your wishlist!');
+      
+    }
+
+        /**
+     * Remove a product from wishlist
+     */
+
+public function remove($id)
+    {
+        $item = Wishlist::findOrFail($id);
+
+        // Security check
+        if ($item->user_id != Auth::id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        $item->delete();
+
+        return back()->with('success', 'Item removed!');
+        
+    }
+
+
     
-            $wishlist->save();
-
-            return response()->json(["message" => "Wishlist item created successfully"], 201);
-        } catch (\Throwable $th) {
-            return response()->json(["error" => $th->getMessage()], 500);
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Wishlist $wishlist)
-    {
-        return Wishlist::findOrFail($wishlist->id);
-    }
-
-
-
-    public function update(Request $request, Wishlist $wishlist)
-    {
-        try {
-            $request->validate([
-                "user_id" => "required|integer",
-                "product_detail_id" => "required|integer",
-            ]);
-
-            $wishlist->user_id = $request->user_id;
-            $wishlist->product_detail_id = $request->product_detail_id;
-            $wishlist->save();
-
-            return response()->json(["message" => "Wishlist item updated successfully"], 200);
-        } catch (\Throwable $th) {
-            return response()->json(["error" => $th->getMessage()], 500);
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Wishlist $wishlist)
-    {
-        try {
-            $wishlist->delete();
-            return response()->json(["message" => "Wishlist item deleted successfully"], 200);
-        } catch (\Throwable $th) {
-            return response()->json(["error" => $th->getMessage()], 500);
-        }
-    }
 }

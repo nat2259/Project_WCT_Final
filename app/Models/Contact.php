@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     protected $fillable = [
-       'user_id'
+        'user_id', 'name', 'email', 'subject', 'message'
     ];
 
     public function user()
@@ -15,3 +15,4 @@ class Contact extends Model
         return $this->belongsTo(User::class);
     }
 }
+

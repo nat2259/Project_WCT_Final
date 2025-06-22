@@ -52,22 +52,22 @@
 		    </div>
 		  </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="index.html">Vegefoods</a>
+	      <a class="navbar-brand" href="{{ url('/dashboard') }}">Vegefoods</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
 
-      <div class="collapse navbar-collapse" id="ftco-nav">
+	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="{{ url('/home') }}" class="nav-link">Home</a></li>
+	          <li class="nav-item active"><a href="{{ url('/dashboard') }}" class="nav-link">Home</a></li>
 	          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
               	<a class="dropdown-item" href="{{ url('/shop') }}">Shop</a>
               	<a class="dropdown-item" href="{{ url('/wishlist') }}">Wishlist</a>
-                <a class="dropdown-item" href="{{ url('/product_single') }}">Single Product</a>
+                {{-- <a class="dropdown-item" href="{{ url('/product_single') }}">Single Product</a> --}}
                 <a class="dropdown-item" href="{{ url('/cart') }}">Cart</a>
                 <a class="dropdown-item" href="{{ url('/checkout') }}" >Checkout</a>
               </div>
@@ -76,9 +76,22 @@
 	          <li class="nav-item"><a href="{{ url('/blog') }}" class="nav-link">Blog</a></li>
 	          <li class="nav-item"><a href="{{ url('/contact') }}"class="nav-link">Contact</a></li>
 	          <li class="nav-item cta cta-colored"><a href="{{ url('/cart') }}"class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-				<li class="nav-item-si" style="margin-top: 20px; margin-left: 10px;">
-    				<a href="{{ url('/register') }}"><span class="fas fa-user"></span></a>
-				</li>
+
+            <div class="user-actions ml-8 mt-[10px]">
+                <!-- Profile Button -->
+                <a href="{{ route('profile.edit') }}" class="btn btn-sm t mr-2">
+                    <i class="fas fa-user-circle mr-1"></i> {{ __('Profile') }}
+                </a>
+                
+                <!-- Logout Button -->
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-sm " 
+                            onclick="return confirm('Are you sure you want to log out?')">
+                        <i class="fas fa-sign-out-alt mr-1"></i> {{ __('Log Out') }}
+                    </button>
+                </form>
+            </div>
 	        </ul>
 	      </div>
 	    </div>
@@ -97,154 +110,154 @@
     </div>
 
     <section class="ftco-section">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-xl-7 ftco-animate">
-						<form action="#" class="billing-form">
-							<h3 class="mb-4 billing-heading">Billing Details</h3>
-	          	<div class="row align-items-end">
-	          		<div class="col-md-6">
-	                <div class="form-group">
-	                	<label for="firstname">Firt Name</label>
-	                  <input type="text" class="form-control" placeholder="">
-	                </div>
-	              </div>
-	              <div class="col-md-6">
-	                <div class="form-group">
-	                	<label for="lastname">Last Name</label>
-	                  <input type="text" class="form-control" placeholder="">
-	                </div>
-                </div>
-                <div class="w-100"></div>
-		            <div class="col-md-12">
-		            	<div class="form-group">
-		            		<label for="country">State / Country</label>
-		            		<div class="select-wrap">
-		                  <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-		                  <select name="" id="" class="form-control">
-		                  	<option value="">France</option>
-		                    <option value="">Italy</option>
-		                    <option value="">Philippines</option>
-		                    <option value="">South Korea</option>
-		                    <option value="">Hongkong</option>
-		                    <option value="">Japan</option>
-		                  </select>
-		                </div>
-		            	</div>
-		            </div>
-		            <div class="w-100"></div>
-		            <div class="col-md-6">
-		            	<div class="form-group">
-	                	<label for="streetaddress">Street Address</label>
-	                  <input type="text" class="form-control" placeholder="House number and street name">
-	                </div>
-		            </div>
-		            <div class="col-md-6">
-		            	<div class="form-group">
-	                  <input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)">
-	                </div>
-		            </div>
-		            <div class="w-100"></div>
-		            <div class="col-md-6">
-		            	<div class="form-group">
-	                	<label for="towncity">Town / City</label>
-	                  <input type="text" class="form-control" placeholder="">
-	                </div>
-		            </div>
-		            <div class="col-md-6">
-		            	<div class="form-group">
-		            		<label for="postcodezip">Postcode / ZIP *</label>
-	                  <input type="text" class="form-control" placeholder="">
-	                </div>
-		            </div>
-		            <div class="w-100"></div>
-		            <div class="col-md-6">
-	                <div class="form-group">
-	                	<label for="phone">Phone</label>
-	                  <input type="text" class="form-control" placeholder="">
-	                </div>
-	              </div>
-	              <div class="col-md-6">
-	                <div class="form-group">
-	                	<label for="emailaddress">Email Address</label>
-	                  <input type="text" class="form-control" placeholder="">
-	                </div>
-                </div>
-                <div class="w-100"></div>
-                <div class="col-md-12">
-                	<div class="form-group mt-4">
-										<div class="radio">
-										 
-										  <label><input type="radio" name="optradio"> Ship to different address</label>
-										</div>
-									</div>
-                </div>
-	            </div>
-	          </form><!-- END -->
-					</div>
-					<div class="col-xl-5">
-	          <div class="row mt-5 pt-3">
-	          	<div class="col-md-12 d-flex mb-5">
-	          		<div class="cart-detail cart-total p-3 p-md-4">
-	          			<h3 class="billing-heading mb-4">Cart Total</h3>
-	          			<p class="d-flex">
-		    						<span>Subtotal</span>
-		    						<span>$20.60</span>
-		    					</p>
-		    					<p class="d-flex">
-		    						<span>Delivery</span>
-		    						<span>$0.00</span>
-		    					</p>
-		    					<p class="d-flex">
-		    						<span>Discount</span>
-		    						<span>$3.00</span>
-		    					</p>
-		    					<hr>
-		    					<p class="d-flex total-price">
-		    						<span>Total</span>
-		    						<span>$17.60</span>
-		    					</p>
-								</div>
-	          	</div>
-	          	<div class="col-md-12">
-	          		<div class="cart-detail p-3 p-md-4">
-	          			<h3 class="billing-heading mb-4">Payment Method</h3>
-									<div class="form-group">
-										<div class="col-md-12">
-											<div class="radio">
-											   <label><input type="radio" name="optradio" class="mr-2"> Direct Bank Tranfer</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="col-md-12">
-											<div class="radio">
-											   <label><input type="radio" name="optradio" class="mr-2"> Check Payment</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="col-md-12">
-											<div class="radio">
-											   <label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="col-md-12">
-											<div class="checkbox">
-											   <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
-											</div>
-										</div>
-									</div>
-									<p><a href="#"class="btn btn-primary py-3 px-4">Place an order</a></p>
-								</div>
-	          	</div>
-	          </div>
-          </div> <!-- .col-md-8 -->
-        </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-7 ftco-animate">
+        <form action="{{ route('checkout.submit') }}" method="POST" class="billing-form">
+          @csrf
+          <h3 class="mb-4 billing-heading">Billing Details</h3>
+          <div class="row align-items-end">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="firstname">First Name</label>
+                <input type="text" name="first_name" class="form-control"
+                  value="{{ Auth::check() ? Auth::user()->first_name : '' }}"
+                  {{ Auth::check() ? 'readonly' : '' }}>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="lastname">Last Name</label>
+                <input type="text" name="last_name" class="form-control"
+                  value="{{ Auth::check() ? Auth::user()->last_name : '' }}"
+                  {{ Auth::check() ? 'readonly' : '' }}>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="country">Country</label>
+                <select name="country" class="form-control">
+                  <option value="Cambodia">Cambodia</option>
+                  <option value="Thailand">Thailand</option>
+                  <option value="Italy">Italy</option>
+                  <option value="South Korea">South Korea</option>
+                  <option value="Hongkong">Hongkong</option>
+                  <option value="Japan">Japan</option>
+                </select>
+              </div>
+            </div>
+
+<div class="col-md-6">
+  <div class="form-group">
+    <label for="street_address">Street Address</label>
+    <input type="text" name="street_address" class="form-control" placeholder="House number and street name">
+  </div>
+</div>
+
+<div class="col-md-6">
+  <div class="form-group">
+    <label for="apartment">Apartment</label>
+    <input type="text" name="apartment" class="form-control" placeholder="Apartment, suite, etc. (optional)">
+  </div>
+</div>
+
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="city">Town / City</label>
+                <input type="text" name="city" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="postcodezip">Postcode / ZIP *</label>
+                <input type="text" name="postcode" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" name="phone" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="emailaddress">Email Address</label>
+                <input type="email" name="email" class="form-control">
+              </div>
+            </div>
+          </div>
       </div>
-    </section> <!-- .section -->
+
+      <div class="col-xl-5">
+
+        @php
+          $subtotal = 0;
+          $discount = 0;
+          foreach ($cartItems as $item) {
+              $price = $item->productDetail->cost;
+              $quantity = $item->quantity;
+              $itemSubtotal = $price * $quantity;
+              $subtotal += $itemSubtotal;
+
+              if (!empty($item->productDetail->discount) && $item->productDetail->discount > 0) {
+                  $discount += ($price * $item->productDetail->discount / 100) * $quantity;
+              }
+          }
+          $delivery = 0;
+          $total = $subtotal - $discount + $delivery;
+        @endphp
+
+        <div class="cart-detail cart-total p-3 p-md-4">
+          <h3 class="billing-heading mb-4">Cart Total</h3>
+          <p class="d-flex">
+            <span>Subtotal</span>
+            <span>${{ number_format($subtotal, 2) }}</span>
+          </p>
+          <p class="d-flex">
+            <span>Delivery</span>
+            <span>${{ number_format($delivery, 2) }}</span>
+          </p>
+          <p class="d-flex">
+            <span>Discount</span>
+            <span>${{ number_format($discount, 2) }}</span>
+          </p>
+          <hr>
+          <p class="d-flex total-price">
+            <span>Total</span>
+            <span>${{ number_format($total, 2) }}</span>
+          </p>
+        </div>
+
+        <div class="cart-detail p-3 p-md-4">
+          <h3 class="billing-heading mb-4">Payment Method</h3>
+          <div class="form-group">
+            <label><input type="radio" name="payment_method" value="bank" class="mr-2" required> Direct Bank Transfer</label><br>
+            <label><input type="radio" name="payment_method" value="check" class="mr-2"> Check Payment</label><br>
+            <label><input type="radio" name="payment_method" value="paypal" class="mr-2"> Paypal</label>
+          </div>
+
+          <div class="form-group">
+            <label><input type="checkbox" name="terms" class="mr-2" required> I have read and accept the terms and conditions</label>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary py-3 px-4">Place an order</button>
+          </div>
+        </div>
+
+      </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+
 
 		<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
       <div class="container py-4">

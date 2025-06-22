@@ -52,21 +52,22 @@
 		    </div>
 		  </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="index.html">Vegefoods</a>
+	      <a class="navbar-brand" href="{{ url('/dashboard') }}">Vegefoods</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
-      <div class="collapse navbar-collapse" id="ftco-nav">
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="{{ url('/home') }}" class="nav-link">Home</a></li>
+	          <li class="nav-item active"><a href="{{ url('/dashboard') }}" class="nav-link">Home</a></li>
 	          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
               	<a class="dropdown-item" href="{{ url('/shop') }}">Shop</a>
               	<a class="dropdown-item" href="{{ url('/wishlist') }}">Wishlist</a>
-                <a class="dropdown-item" href="{{ url('/product_single') }}">Single Product</a>
+                {{-- <a class="dropdown-item" href="{{ url('/product_single') }}">Single Product</a> --}}
                 <a class="dropdown-item" href="{{ url('/cart') }}">Cart</a>
                 <a class="dropdown-item" href="{{ url('/checkout') }}" >Checkout</a>
               </div>
@@ -75,9 +76,22 @@
 	          <li class="nav-item"><a href="{{ url('/blog') }}" class="nav-link">Blog</a></li>
 	          <li class="nav-item"><a href="{{ url('/contact') }}"class="nav-link">Contact</a></li>
 	          <li class="nav-item cta cta-colored"><a href="{{ url('/cart') }}"class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-				<li class="nav-item-si" style="margin-top: 20px; margin-left: 10px;">
-    				<a href="{{ url('/register') }}"><span class="fas fa-user"></span></a>
-				</li>
+
+            <div class="user-actions ml-8 mt-[10px]">
+                <!-- Profile Button -->
+                <a href="{{ route('profile.edit') }}" class="btn btn-sm t mr-2">
+                    <i class="fas fa-user-circle mr-1"></i> {{ __('Profile') }}
+                </a>
+                
+                <!-- Logout Button -->
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-sm " 
+                            onclick="return confirm('Are you sure you want to log out?')">
+                        <i class="fas fa-sign-out-alt mr-1"></i> {{ __('Log Out') }}
+                    </button>
+                </form>
+            </div>
 	        </ul>
 	      </div>
 	    </div>
@@ -96,6 +110,14 @@
     </div>
 
     <section class="ftco-section contact-section bg-light">
+      
+  @if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+
+
+@endif
+
+
       <div class="container">
       	<div class="row d-flex mb-5 contact-info">
           <div class="w-100"></div>
@@ -122,23 +144,26 @@
         </div>
         <div class="row block-9">
           <div class="col-md-6 order-md-last d-flex">
-            <form action="#" class="bg-white p-5 contact-form">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Name">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Email">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Subject">
-              </div>
-              <div class="form-group">
-                <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
-              </div>
-              <div class="form-group">
-                <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
-              </div>
-            </form>
+            <form action="{{ route('contact.store') }}" method="POST"  class="bg-white p-5 contact-form">
+          @csrf
+          
+                  <div class="form-group">
+                      <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                  </div>
+                  <div class="form-group">
+                      <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                  </div>
+                  <div class="form-group">
+                      <input type="text" name="subject" class="form-control" placeholder="Subject">
+                  </div>
+                  <div class="form-group">
+                      <textarea name="message" cols="30" rows="7" class="form-control" placeholder="Message" required></textarea>
+                  </div>
+                  <div class="form-group">
+                      <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+                  </div>
+              </form>
+
           
           </div>
 

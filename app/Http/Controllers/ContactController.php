@@ -2,81 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Contact;
 use Illuminate\Http\Request;
-use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Contact;
 
 class ContactController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return Contact::with('user')->get();
+        return view('contact');
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
-    {
-        try {
-            $request->validate([
-                "user_id" => "required|integer",
-          
-            ]);
+{
+    $validated = $request->validate([
+        'name' => 'required|string',
+        'email' => 'required|email',
+        'subject' => 'nullable|string',
+        'message' => 'required|string',
+    ]);
 
-            $contact = new Contact();
-            $contact->user_id = $request->user_id;
-            $contact->save();
+    // Add user_id if authenticated
+    $validated['user_id'] = Auth::id();
 
-            return response()->json(["message" => "Contact created successfully"], 201);
-        } catch (\Throwable $th) {
-            return response()->json(["error" => $th->getMessage()], 500);
-        }
-    }
+    Contact::create($validated);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Contact $contact)
-    {
-        return Contact::with('user')->findOrFail($contact->id);
-    }
-
-  
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Contact $contact)
-    {
-        try {
-            $request->validate([
-                "user_id" => "required|integer",
-            ]);
-
-            $contact->user_id = $request->user_id;
-            $contact->save();
-
-            return response()->json(["message" => "Contact updated successfully"], 200);
-        } catch (\Throwable $th) {
-            return response()->json(["error" => $th->getMessage()], 500);
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Contact $contact)
-    {
-        try {
-            $contact->delete();
-            return response()->json(["message" => "Contact deleted successfully"], 200);
-        } catch (\Throwable $th) {
-            return response()->json(["error" => $th->getMessage()], 500);
-        }
-    }
+    return redirect()->route('contact.index')->with('success', 'Message sent!');
+}
 }
